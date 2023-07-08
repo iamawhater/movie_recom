@@ -1,0 +1,6 @@
+[build]
+  command = "python app.py" 
+
+[build.environment]
+  PYTHON_VERSION = "3.10.9"  # Replace with the appropriate Python version
+
