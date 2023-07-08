@@ -1,0 +1,97 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Movie Recommender</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+      color: #333;
+    }
+    h1{ 
+      text-align: center;
+      color: #444
+    }
+    
+    h2, h3 {
+      color: #444;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+    input[type="submit"] {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    li:last-child {
+      border-bottom: none;
+    }
+
+    .stars {
+      display: inline-block;
+      font-size: 20px;
+      color: #ffca00;
+    }
+  
+  </style>
+</head>
+<body>
+  <h1>Movie Recommender</h1>
+  <h3> This is a test for my recommender system in form of web application. I am using 9742 movies databases with 100836 ratings from thousands of users</h3>
+  <h3> This application uses surprise library of Python and uses KNNBasic model for recommendations</h3>
+  <form action="/recommendations" method="POST">
+    <label for="user_id">User ID:</label><br>
+    <input type="number" id="user_id" name="user_id" required><br>
+    <br>
+    <label for="n">Number of Movies to be Recommended:</label><br>
+    <input type="number" id="n" name="n"><br>
+    <input type="submit" value="Get Recommendations">
+  </form>
+  {% if recommendations %}
+  <h2>Recommendations:</h2>
+  <ul>
+  {% for movie, rating in recommendations %}
+  <li>{{ movie }} <br> - Predicted user rating: <span class="stars" data-rating="{{ rating }}"></span></li>
+  {% endfor %}
+  </ul>
+  {% endif %}
+
+  <script>
+    // Find all the stars elements and convert their data-rating attribute into stars
+    document.querySelectorAll('.stars').forEach(stars => {
+      const rating = parseFloat(stars.dataset.rating);
+      let output = '';
+      for (let i = 1; i <= 5; i++) {
+        output += i <= rating ? '★' : '☆';
+      }
+      stars.textContent = output;
+    });
+  </script>
+</body>
+</html>
+
